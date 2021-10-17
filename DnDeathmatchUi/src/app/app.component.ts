@@ -15,8 +15,7 @@ export class AppComponent {
   }
 
   pingBackend(){
-    console.log("Ping on Frontend side");
-    this.httpClient.get('http://localhost:8080/UI/hello').subscribe(
+    this.httpClient.get('http://localhost:8080/api/process').subscribe(
       (response) => { 
         this.state = response 
         console.log(response);

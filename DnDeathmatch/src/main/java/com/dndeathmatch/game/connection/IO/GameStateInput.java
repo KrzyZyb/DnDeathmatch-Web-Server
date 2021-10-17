@@ -1,11 +1,11 @@
-package com.dndeathmatch.game.model;
+package com.dndeathmatch.game.connection.IO;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public class GameState {
+@Getter
+public class GameStateInput {
     private String player;
     private String id;
 }
