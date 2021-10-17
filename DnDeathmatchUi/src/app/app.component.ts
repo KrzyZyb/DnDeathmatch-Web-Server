@@ -8,6 +8,7 @@ import { HttpClient } from  '@angular/common/http';
 })
 export class AppComponent {
   title = 'DnDeathmatchUi';
+  state: any;
 
   constructor(private httpClient: HttpClient){
 
@@ -16,7 +17,15 @@ export class AppComponent {
   pingBackend(){
     console.log("Ping on Frontend side");
     this.httpClient.get('http://localhost:8080/UI/hello').subscribe(
-      (response) => { console.log(response) },
+      (response) => { 
+        this.state = response 
+        console.log(response);
+      },
       (error) => { console.log(error); });;
   }
+}
+
+export interface GameState{
+  player: string;
+  id: string;
 }

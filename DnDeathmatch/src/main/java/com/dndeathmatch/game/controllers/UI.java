@@ -1,5 +1,6 @@
 package com.dndeathmatch.game.controllers;
 
+import com.dndeathmatch.game.model.GameState;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +12,12 @@ public class UI {
 
     @GetMapping(value = "/hello")
     public @ResponseBody
-    String getHelloData() {
+    GameState getGameState() {
+        GameState state = new GameState();
+        state.setId("Id");
+        state.setPlayer("Player");
         System.out.println("Ping on backend side");
-        return "Hello";
+        return state;
     }
 
 }
