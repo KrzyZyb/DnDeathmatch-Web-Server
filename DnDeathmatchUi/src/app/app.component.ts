@@ -51,11 +51,11 @@ export class AppComponent implements OnInit{
       console.log('Disconnected!');
     }
   
-    sendName() {
+    pingBackend() {
       this.stompClient.send(
         '/gkz/hello',
         {},
-        JSON.stringify({ 'name': this.name })
+        JSON.stringify({ 'player': 'name from frontend', 'id':'id from frontend' })
       );
     }
   

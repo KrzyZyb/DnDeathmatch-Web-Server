@@ -13,6 +13,7 @@ public class Communication {
     @SendTo("/topic/hi") //ENDPOINT TO SUBSCRIBE ON FRONTEND LISTENERS
     public GameStateOutput send(GameStateInput input) throws Exception {
         System.out.println("Backend endpoint websocket ping");
+        System.out.println(input);
         GameStateOutput newState = new GameStateOutput();
         newState.setId("Id");
         newState.setPlayer("Player");
