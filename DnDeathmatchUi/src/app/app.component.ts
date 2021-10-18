@@ -28,7 +28,7 @@ export class AppComponent implements OnInit{
     }
   
     connect() {
-      const socket = new SockJS('http://localhost:8080/gkz-stomp-endpoint');
+      const socket = new SockJS('http://localhost:8080/client-registry');
       this.stompClient = Stomp.over(socket);
   
       const _this = this;
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
         _this.setConnected(true);
         console.log('Connected: ' + frame);
   
-        _this.stompClient.subscribe('/topic/hi', function (hello) {
+        _this.stompClient.subscribe('/out/message', function (hello) {
           _this.showGreeting(JSON.parse(hello.body).greeting);
         });
       });
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit{
   
     pingBackend() {
       this.stompClient.send(
-        '/gkz/hello',
+        '/in/message',
         {},
         JSON.stringify({ 'player': 'name from frontend', 'id':'id from frontend' })
       );
