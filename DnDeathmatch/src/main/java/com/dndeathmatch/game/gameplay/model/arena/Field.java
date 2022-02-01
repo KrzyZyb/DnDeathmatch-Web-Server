@@ -1,19 +1,27 @@
 package com.dndeathmatch.game.gameplay.model.arena;
 
+import java.awt.*;
+
 public class Field {
-    private int x;
-    private int y;
+    private Point point;
     private FieldType fieldType;
 
-    private Field(FieldType fieldType, int x, int y){
+    private Field(FieldType fieldType, Point point){
         this.fieldType = fieldType;
-        this.x = x;
-        this.y = y;
+        this.point = point;
     }
 
-    public static Field getFieldByType(int fieldTypeId, int x, int y){
+    public static Field getFieldByType(int fieldTypeId, Point point){
         //GET FIELD TYPE BY ORDINAL
         FieldType fieldType = FieldType.values()[fieldTypeId];
-        return new Field(fieldType, x, y);
+        return new Field(fieldType, point);
+    }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "coords=[" + point.x +"/"+point.y +"]"+
+                ", fieldType=" + fieldType.toString() +
+                '}';
     }
 }
