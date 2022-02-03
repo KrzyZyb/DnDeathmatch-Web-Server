@@ -8,7 +8,6 @@ public class DnDeathmatch {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DnDeathmatch.class, args);
-
 	}
 
 }

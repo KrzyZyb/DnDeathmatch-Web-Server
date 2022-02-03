@@ -6,6 +6,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class GameStateInput {
-    private String player;
+    private String name;
     private String id;
 }
