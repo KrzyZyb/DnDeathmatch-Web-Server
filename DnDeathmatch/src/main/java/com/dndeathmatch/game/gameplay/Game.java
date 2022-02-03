@@ -14,9 +14,9 @@ public class Game {
     private Arena arena;
 
 
-    public Game() {
+    public Game(final Arena arena) {
         this.players = new ArrayList<>();
-        this.arena = Arena.initializeNewArena();
+        this.arena = arena;
     }
 
     public void addPlayer(Player player){
