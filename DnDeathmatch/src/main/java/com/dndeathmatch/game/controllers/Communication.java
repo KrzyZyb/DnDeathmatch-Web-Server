@@ -12,20 +12,28 @@ import org.springframework.stereotype.Controller;
 public class Communication {
     private Game game;
 
-
     public Communication(Game game) {
         this.game = game;
     }
 
     @MessageMapping("/message")
     @SendTo("/out/message")
-    public GameStateOutput send(GameStateInput input) throws Exception {
-        GameStateOutput newState = new GameStateOutput();
+    public GameStateOutput processInputFromClient(GameStateInput input) throws Exception {
+        return this.game.isPlayerInGame(input.getId()) ? this.processRound(input) : this.addNewPlayer(input);
+    }
+
+    private GameStateOutput addNewPlayer(GameStateInput input) {
         Player player = new Player(input.getId(), input.getName());
+        GameStateOutput newState = new GameStateOutput();
         game.addPlayer(player);
-        newState.setId("Id");
-        newState.setPlayer("Player");
+        // TODO: EXTEND WITH PLAYER HIDDEN IN RANDOM PROPER LOCATION
         return newState;
+
+    }
+
+    private GameStateOutput processRound(GameStateInput input) {
+        //TODO: PROCESS ROUND
+        return new GameStateOutput();
     }
 
 }

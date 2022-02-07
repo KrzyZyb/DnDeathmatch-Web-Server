@@ -22,4 +22,8 @@ public class Game {
     public void addPlayer(Player player){
         this.players.put(player.getId(), player);
     }
+
+    public boolean isPlayerInGame(String id){
+        return this.players.containsKey(id);
+    }
 }
