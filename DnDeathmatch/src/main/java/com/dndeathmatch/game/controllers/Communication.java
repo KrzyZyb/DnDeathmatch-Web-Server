@@ -19,21 +19,20 @@ public class Communication {
     @MessageMapping("/message")
     @SendTo("/out/message")
     public GameStateOutput processInputFromClient(GameStateInput input) throws Exception {
-        return this.game.isPlayerInGame(input.getId()) ? this.processRound(input) : this.addNewPlayer(input);
+        Player player = this.game.findPlayer(input.getId());
+        return player != null ? this.processRound(input, player) : this.addNewPlayer(input);
     }
 
     private GameStateOutput addNewPlayer(GameStateInput input) {
         Player player = new Player(input.getId(), input.getName());
-        GameStateOutput newState = new GameStateOutput();
         game.addPlayer(player);
+        GameStateOutput newState = this.game.processRoundForNewPlayer(player);
         // TODO: EXTEND WITH PLAYER HIDDEN IN RANDOM PROPER LOCATION
         return newState;
-
     }
 
-    private GameStateOutput processRound(GameStateInput input) {
-        //TODO: PROCESS ROUND
-        return new GameStateOutput();
+    private GameStateOutput processRound(GameStateInput input, Player player) {
+        GameStateOutput newState = this.game.processRound(player, input);
+        return newState;
     }
-
 }

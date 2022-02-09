@@ -52,15 +52,26 @@ export class AppComponent implements OnInit{
     }
   
     pingBackend() {
+      let newPlayerId:string = this.generatePlayerId();
       this.stompClient.send(
         '/in/message',
         {},
-        JSON.stringify({ 'player': 'name from frontend', 'id':'id from frontend' })
+        JSON.stringify({ 'name': 'name from frontend', 'id':newPlayerId, 'content':'content from frontend' })
       );
     }
   
     showGreeting(message) {
       this.greetings.push(message);
+    }
+
+    generatePlayerId():string {
+      let text = "";
+      let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,./;'[]\=-)(*&^%$#@!~`";
+      const hashLength = 30;
+      for (let i = 0; i < hashLength; i++) {
+        text += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+        return text;
     }
 }
 
