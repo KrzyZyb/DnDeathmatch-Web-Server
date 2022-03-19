@@ -15,12 +15,11 @@ public class Field {
         this.edges = this.setEdges(point);
     }
 
-    private Point[] setEdges(Point point) {
-        Point bottomLeft = point;
-        Point upperLeft = new Point(point.x, point.y+1);
-        Point upperRight = new Point(point.x+1, point.y+1);
-        Point bottomRight = new Point(point.x+1, point.y);
-        return new Point[]{bottomLeft, upperLeft, upperRight, bottomRight};
+    private Point[] setEdges(Point topLeft) {
+        Point bottomLeft = new Point(topLeft.x, topLeft.y+1);
+        Point bottomRight = new Point(topLeft.x+1, topLeft.y+1);
+        Point topRight = new Point(topLeft.x+1, topLeft.y);
+        return new Point[]{topLeft, bottomLeft, bottomRight, topRight};
     }
 
     public static Field getFieldByType(int fieldTypeId, Point point){
