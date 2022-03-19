@@ -1,7 +1,5 @@
 package com.dndeathmatch.game.gameplay.model.arena;
 
-import org.springframework.security.core.parameters.P;
-
 import java.awt.*;
 
 public class Field {

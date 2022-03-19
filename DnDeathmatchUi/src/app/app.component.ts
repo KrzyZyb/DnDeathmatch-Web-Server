@@ -9,8 +9,10 @@ import * as SockJS from 'sockjs-client';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+   playerId:string;
 
   ngOnInit(): void {
+   this.playerId = this.generatePlayerId();
     this.connect()
   }
 
@@ -21,45 +23,44 @@ export class AppComponent implements OnInit{
 
     setConnected(connected: boolean) {
       this.disabled = !connected;
-  
+
       if (connected) {
         this.greetings = [];
       }
     }
-  
+
     connect() {
       const socket = new SockJS('http://localhost:8080/client-registry');
       this.stompClient = Stomp.over(socket);
-  
+
       const _this = this;
       this.stompClient.connect({}, function (frame) {
         _this.setConnected(true);
         console.log('Connected: ' + frame);
-  
+
         _this.stompClient.subscribe('/out/message', function (hello) {
           _this.showGreeting(JSON.parse(hello.body).greeting);
         });
       });
     }
-  
+
     disconnect() {
       if (this.stompClient != null) {
         this.stompClient.disconnect();
       }
-  
+
       this.setConnected(false);
       console.log('Disconnected!');
     }
-  
+
     pingBackend() {
-      let newPlayerId:string = this.generatePlayerId();
       this.stompClient.send(
         '/in/message',
         {},
-        JSON.stringify({ 'name': 'name from frontend', 'id':newPlayerId, 'content':'content from frontend' })
+        JSON.stringify({ 'name': 'name from frontend', 'id':this.playerId, 'content':'content from frontend' })
       );
     }
-  
+
     showGreeting(message) {
       this.greetings.push(message);
     }
