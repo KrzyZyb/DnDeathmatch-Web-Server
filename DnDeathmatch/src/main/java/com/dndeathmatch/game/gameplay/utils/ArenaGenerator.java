@@ -17,7 +17,7 @@ public class ArenaGenerator {
         Field[][] arena = new Field[arenaHeight][arenaWidth];
 
         for(int row = 0; row < arenaHeight; row++){
-            int yCoordinate = ((arenaHeight-1)-row);
+            int yCoordinate = row;
             for(int tile = 0; tile < arenaWidth; tile++){
                 int xCoordinate = tile;
                 int fieldTypeValueFromMap = map[row][tile];
