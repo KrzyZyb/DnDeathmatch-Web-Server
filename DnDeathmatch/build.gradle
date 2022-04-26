@@ -42,12 +42,10 @@ sourceSets {
 			srcDirs = ["$projectDir/src/main/resources"]
 
 		}
-//		output.resourcesDir = file("$buildDir/resources/static")
 	}
 }
 
 task deleteStaticFolder(type: Delete) {
-	println 'deleting static directory...'
 	def backendStaticDir = "src/main/resources/static"
 	def frontendStaticDir = "$webappDir/static"
 	file( backendStaticDir ).list().each{
@@ -61,7 +59,6 @@ task deleteStaticFolder(type: Delete) {
 }
 
 task copyFrontend(type: Copy) {
-	println 'copying frontend...'
 	def frontendStaticDir = "../DnDeathmatchUi/static"
 	def backendTargetDir = "./src/main/resources/static"
 	from "$frontendStaticDir"
@@ -69,25 +66,19 @@ task copyFrontend(type: Copy) {
 }
 
 clean{
-	println 'cleaning...'
 	dependsOn "deleteStaticFolder"
 }
 
 processResources {
-	println 'processing resources...'
 	dependsOn "buildAngular"
 	dependsOn "copyFrontend"
 }
 
 task buildAngular(type:Exec) {
-	println 'building angular project...'
-	// installAngular should be run prior to this task
 	dependsOn "installAngular"
 	workingDir "$webappDir"
 	inputs.dir "$webappDir"
-	// Add task to the standard build group
 	group = BasePlugin.BUILD_GROUP
-	// ng doesn't exist as a file in windows -> ng.cmd
 	if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
 		commandLine "ng.cmd", "build"
 	} else {
@@ -96,7 +87,6 @@ task buildAngular(type:Exec) {
 }
 
 task installAngular(type:Exec) {
-	println 'inside installAngular'
 	workingDir "$webappDir"
 	inputs.dir "$webappDir"
 	group = BasePlugin.BUILD_GROUP
