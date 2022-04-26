@@ -32,7 +32,7 @@ out/
 /nbproject/private/
 /nbbuild/
 /dist/
-/static/
+**/static/
 /nbdist/
 /.nb-gradle/
 
