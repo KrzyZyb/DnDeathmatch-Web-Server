@@ -1,5 +1,5 @@
 {
-    "name": "dn-deathmatch-ui",
+    "name": "DnDeathmatchUi",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",

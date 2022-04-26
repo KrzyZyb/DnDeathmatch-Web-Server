@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+apply plugin: 'war'
 
 group = 'com.dndeathmatch'
 version = '0.0.1-SNAPSHOT'
@@ -34,19 +35,52 @@ test {
 }
 
 def webappDir = "../DnDeathmatchUi"
+
 sourceSets {
 	main {
 		resources {
-			srcDirs = ["$webappDir/dist", "$projectDir/src/main/resources"]
+			srcDirs = ["$projectDir/src/main/resources"]
+
 		}
+//		output.resourcesDir = file("$buildDir/resources/static")
 	}
 }
 
+task deleteStaticFolder(type: Delete) {
+	println 'deleting static directory...'
+	def backendStaticDir = "src/main/resources/static"
+	def frontendStaticDir = "$webappDir/static"
+	file( backendStaticDir ).list().each{
+		f ->
+			delete "${backendStaticDir}/${f}"
+	}
+	file(frontendStaticDir).list().each{
+		f ->
+			delete "${frontendStaticDir}/${f}"
+	}
+}
+
+task copyFrontend(type: Copy) {
+	println 'copying frontend...'
+	def frontendStaticDir = "../DnDeathmatchUi/static"
+	def backendTargetDir = "./src/main/resources/static"
+	from "$frontendStaticDir"
+	into "$backendTargetDir"
+}
+
+clean{
+	println 'cleaning...'
+	dependsOn "deleteStaticFolder"
+}
+
 processResources {
+	println 'processing resources...'
 	dependsOn "buildAngular"
+	dependsOn "copyFrontend"
 }
 
 task buildAngular(type:Exec) {
+	println 'building angular project...'
 	// installAngular should be run prior to this task
 	dependsOn "installAngular"
 	workingDir "$webappDir"
@@ -62,6 +96,7 @@ task buildAngular(type:Exec) {
 }
 
 task installAngular(type:Exec) {
+	println 'inside installAngular'
 	workingDir "$webappDir"
 	inputs.dir "$webappDir"
 	group = BasePlugin.BUILD_GROUP
