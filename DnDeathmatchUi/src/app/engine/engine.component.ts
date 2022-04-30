@@ -1,5 +1,6 @@
 import { OnInit, Component, ElementRef, NgZone } from '@angular/core';
 import { Actor, CollisionType, Color, Engine } from 'excalibur';
+import { Character } from './character';
 
 @Component({
   selector: 'app-engine',
@@ -16,33 +17,14 @@ export class EngineComponent implements OnInit {
       height: 600,
     });
     game.start();
-    const paddle = this.createPlayerActor(game);
-    paddle.body.collisionType = CollisionType.Fixed;
-    game.add(paddle);
+    const player = this.createPlayerActor(game);
+    player.body.collisionType = CollisionType.Fixed;
+    game.add(player);
   }
 
   createPlayerActor(game: Engine): Actor {
-    const hero = new Actor({
-      x: 150,
-      y: game.drawHeight - 40,
-      width: 30,
-      height: 30,
-      color: Color.Chartreuse,
-    });
-
-    hero.on("pointerdown", () => {
-      console.log("Pointer down!");
-    });
-    hero.on("pointerenter", () => {
-      console.log("Pointer enter!");
-    });
-    hero.on("pointerleave", () => {
-      console.log("Pointer leave!");
-    });
-    return hero;
-
+    return new Character(150,(game.drawHeight - 40), Color.White);
   }
-
 
   updateState(): void {
   }
