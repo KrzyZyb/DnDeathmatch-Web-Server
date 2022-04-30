@@ -16,23 +16,31 @@ export class EngineComponent implements OnInit {
       height: 600,
     });
     game.start();
-    const paddle = new Actor({
+    const paddle = this.createPlayerActor(game);
+    paddle.body.collisionType = CollisionType.Fixed;
+    game.add(paddle);
+  }
+
+  createPlayerActor(game: Engine): Actor {
+    const hero = new Actor({
       x: 150,
       y: game.drawHeight - 40,
-      width: 200,
-      height: 20,
-      // Let's give it some color with one of the predefined
-      // color constants
+      width: 30,
+      height: 30,
       color: Color.Chartreuse,
     });
 
-    // Make sure the paddle can partipate in collisions, by default excalibur actors do not collide with each other
-    // CollisionType.Fixed is like an object with infinite mass, and cannot be moved, but does participate in collision.
-    paddle.body.collisionType = CollisionType.Fixed;
+    hero.on("pointerdown", () => {
+      console.log("Pointer down!");
+    });
+    hero.on("pointerenter", () => {
+      console.log("Pointer enter!");
+    });
+    hero.on("pointerleave", () => {
+      console.log("Pointer leave!");
+    });
+    return hero;
 
-    // `game.add` is the same as calling
-    // `game.currentScene.add`
-    game.add(paddle);
   }
 
 
