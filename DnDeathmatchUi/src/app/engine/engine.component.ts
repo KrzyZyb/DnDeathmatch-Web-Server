@@ -1,6 +1,8 @@
 import { OnInit, Component, ElementRef, NgZone } from '@angular/core';
-import { Actor, CollisionType, Color, Engine } from 'excalibur';
+import { Actor, CollisionType, Color, Engine} from 'excalibur';
+import * as ex from 'excalibur';
 import { Character } from './character';
+import { TiledMapResource } from '@excaliburjs/plugin-tiled';
 
 @Component({
   selector: 'app-engine',
@@ -16,10 +18,13 @@ export class EngineComponent implements OnInit {
       width: 800,
       height: 600,
     });
-    game.start();
-    const player = this.createPlayerActor(game);
-    player.body.collisionType = CollisionType.Fixed;
-    game.add(player);
+    const tiledMap = new TiledMapResource("/assets/map.tmx");
+    const loader = new ex.Loader([tiledMap]);
+  
+    game.start(loader).then(function() {
+      console.log("Game loaded");
+      tiledMap.addTiledMapToScene(game.currentScene);
+   });
   }
 
   createPlayerActor(game: Engine): Actor {
