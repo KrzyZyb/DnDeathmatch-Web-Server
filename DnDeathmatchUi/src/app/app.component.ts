@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
    this.playerId = this.generatePlayerId();
-    this.connect()
+  //   this.connect()
   }
 
   greetings: string[] = [];
