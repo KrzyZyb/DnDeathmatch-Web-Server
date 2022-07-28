@@ -28,7 +28,10 @@
                         "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
-                            "src/assets"
+                            "src/assets",
+                            "src/assets/tilesheet.png",
+                            "src/assets/map.tsx",
+                            "src/assets/map.tmx"
                         ],
                         "styles": [
                             "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",

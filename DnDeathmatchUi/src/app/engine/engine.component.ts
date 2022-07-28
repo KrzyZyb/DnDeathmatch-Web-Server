@@ -18,12 +18,15 @@ export class EngineComponent implements OnInit {
       width: 800,
       height: 600,
     });
-    const tiledMap = new TiledMapResource("./assets/map.tmx");
+    const tiledMap = new TiledMapResource("/assets/map.tmx");
     const loader = new ex.Loader([tiledMap]);
   
     game.start(loader).then(function() {
       console.log("Game loaded");
       tiledMap.addTiledMapToScene(game.currentScene);
+      console.log(game.currentScene.tileMaps)
+      console.log(game.currentScene.entities)
+
    });
   }
 
