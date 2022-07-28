@@ -19,6 +19,12 @@ export class EngineComponent implements OnInit {
       height: 600,
     });
     const tiledMap = new TiledMapResource("/assets/map.tmx");
+    tiledMap.convertPath = (originPath, relativePath) => {
+      console.log(originPath, relativePath);
+      const segments = relativePath.split('/');
+      const filename = segments[segments.length - 1];
+      return '/assets/' + filename;
+    }
     const loader = new ex.Loader([tiledMap]);
   
     game.start(loader).then(function() {
