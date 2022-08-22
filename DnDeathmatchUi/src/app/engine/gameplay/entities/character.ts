@@ -1,54 +1,35 @@
-import { OnInit } from '@angular/core';
-import * as ex from 'excalibur';
-import { Actor, CollisionType, Color, Engine } from 'excalibur';
+import { Actor, Color, Engine } from 'excalibur';
+import { PathLine } from './pathline';
 
-export class Character extends Actor{
+export class Character extends Actor {
   selected: boolean = false;
   game: Engine;
-  pathLine: Actor;
+  pathLine: PathLine;
 
   constructor(game: Engine) {
-    super({ x: 150, y: (game.drawHeight - 100), color: Color.DarkGray, radius: 20});
+    super({ x: 150, y: (game.drawHeight - 100), color: Color.DarkGray, radius: 20 });
     this.game = game;
+    this.pathLine = new PathLine(game);
 
     super.on("pointerdown", () => {
-      this.selected=!this.selected;
-      if(this.selected){
-        this.color = Color.Green
-        this.displayMovePath(this, game, true);
+      this.selected = !this.selected;
+      if (this.selected) {
+        this.color = Color.Green;
+        this.pathLine.togglePathLineDisplay(this.pos)
       }
-      else{
+      else {
         this.color = Color.White
         game.remove(this.pathLine);
+        this.pathLine.togglePathLineDisplay(this.pos)
       };
     });
 
     super.on("pointerenter", () => {
-      if(!this.selected){this.color = Color.LightGray}
+      if (!this.selected) { this.color = Color.LightGray }
     });
 
     super.on("pointerleave", () => {
-      if(!this.selected){this.color = Color.DarkGray}
+      if (!this.selected) { this.color = Color.DarkGray }
     });
   }
-
-  displayMovePath(actor: Actor, game: Engine, isPathDisplayed: boolean) {
-    const lineActor: Actor = new ex.Actor({})
-    lineActor.graphics.anchor = ex.Vector.Zero
-    lineActor.graphics.use(
-      new ex.Line({
-        start: ex.vec(actor.pos.x, actor.pos.y),
-        end: ex.vec(800, 600),
-        color: ex.Color.Green,
-        thickness: 10,
-      })
-    )
-    game.add(lineActor)
-    this.pathLine = lineActor;
-  }
-
 }
-
-
-
-
