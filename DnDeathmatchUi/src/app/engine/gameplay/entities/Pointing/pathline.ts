@@ -1,54 +1,46 @@
 import * as ex from 'excalibur';
-import { Actor, Engine, ScreenElement, Vector } from 'excalibur';
+import { Actor, Collider, CollisionType, Engine, ScreenElement, Vector } from 'excalibur';
 
 export class PathLine extends Actor {
   enabled: boolean = false;
   startPoint: ex.Vector;
   line: ex.Line;
   thickness: 2;
-  public eventPubSuber: Actor;
+  pathLine: Actor;
 
-  constructor(game: Engine, pos:Vector) {
+  constructor() {
     super();
-    this.eventPubSuber = new Actor();
-    let dragUI: ScreenElement;
-  
-    game.input.pointers.primary.on('down', function (event) {
-      if (dragUI) dragUI.kill();
-  
-      dragUI = new ScreenElement({
+  }
+
+  public toggle(game: Engine, pos: Vector): void {
+    this.enabled = !this.enabled;
+    if (this.enabled) {
+      this.pathLine = new Actor({
         pos: pos,
+        collisionType: CollisionType.Passive
       });
-      game.add(dragUI);
-  
-      game.input.pointers.primary.on('move', function (event) {
+      game.add(this.pathLine);
+
+      game.input.pointers.primary.on('move',  (event) => {
         const canvas = new ex.Canvas({
           width: game.drawWidth,
           height: 32, // must be 2^n
           draw: (ctx: CanvasRenderingContext2D) => {
-            ctx.fillStyle = "red";
-            const length = event.screenPos.distance(dragUI.pos);
+            ctx.fillStyle = "#53fb00"; //Player Green in HEX
+            const length = event.screenPos.distance(this.pathLine.pos);
             ctx.fillRect(0, 0, length, 10);
           },
         });
-        dragUI.graphics.use(canvas);
-        dragUI.anchor = new ex.Vector(0, 0.5);
-  
-        const rotation = event.screenPos.sub(dragUI.pos).toAngle();
-        dragUI.rotation = rotation;
+        this.pathLine.graphics.use(canvas);
+        this.pathLine.anchor = new ex.Vector(0, 0.5);
+
+        const rotation = event.screenPos.sub(this.pathLine.pos).toAngle();
+        this.pathLine.rotation = rotation;
       });
-    });
-  
-    game.input.pointers.primary.on('up', function (event) {
-      if (!dragUI) return;
-      dragUI.kill();
-  
+    } else {
+      this.pathLine.kill();
       game.input.pointers.primary.off('move');
-    });
-  }
+    }
 
-  override update(engine: Engine, delta: number){
-    super.update(engine, delta)
   }
-
 }
