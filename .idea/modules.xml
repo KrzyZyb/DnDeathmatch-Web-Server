@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DnDeathmatch-Web-Server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DnDeathmatch-Web-Server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.dndeathmatch.DnDeathmatch-Web-Server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.dndeathmatch.DnDeathmatch-Web-Server.main.iml" />
     </modules>
   </component>
 </project>
