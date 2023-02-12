@@ -1,2 +1,1 @@
-rootProject.name = 'game'
-include ('DnDeathmatchUi', 'DnDeathmatch')
+rootProject.name = 'DnDeathmatch-Web-Server'
